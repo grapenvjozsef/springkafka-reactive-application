@@ -50,7 +50,6 @@ public class KafkaProducerService {
                 .map(i -> SenderRecord.create(new ProducerRecord<>(kafkaTopic, i, message), i)))
                 .doOnError(e -> log.error("Send failed", e))
                 .subscribe(r -> {
-                    // Feliratkozunk arra az eseményre, ami a kiolvasott üzenetek visszaigazolását intézi
                     final RecordMetadata metadata = r.recordMetadata();
                     log.info(String.format("Message %d sent successfully, topic-partition=%s-%d offset=%d timestamp=%s\n",
                             r.correlationMetadata(),
